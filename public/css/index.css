@@ -32,7 +32,7 @@ img {
   max-width: 100%;
 }
 
-.container {
+.Container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -57,6 +57,8 @@ img {
 .justify-center {
   justify-content: center;
 }
+
+
 
 @media (min-width: 0) {
   .col-12-xs {
@@ -185,6 +187,9 @@ img {
   padding: 0.75rem 1.5rem;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
+
+
+
 
 .p-0 {
   padding: 0;
@@ -843,4 +848,31 @@ td .status {
   .cards {
     grid-template-columns: 100%;
   }
+}
+
+@media (max-width: 924px) {
+     footer{
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    
+     }
+  
+  
+
+}
+
+@media (max-width: 705px) {
+     footer div{
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem;
+    
+     }
+     .chat-us img{
+      width: 20%;
+     }
+  
+  
+
 }

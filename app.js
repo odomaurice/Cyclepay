@@ -3,6 +3,18 @@
                     
                     const  ejs = require("ejs");
                     const _ = require("lodash");
+
+                    const cors = require("cors");
+                    const path = require("path");
+                    var http = require("http");
+                    var fs = require("fs");
+                    var flash = require("connect-flash");
+                    
+                    const {
+                      body,
+                      validationResult,
+                    } = require("express-validator");
+                    const { Console } = require("console");
                     
                     const mongoose = require("mongoose");
                     const encrypt = require("mongoose-encryption");
@@ -15,18 +27,25 @@
 
                     
 
-                    app.set("view engine", "ejs");
+                    
                     app.use(bodyParser.urlencoded({ extended: true }));
                     app.use(express.static("public"));
+                    app.use(cors());
+                    app.use(bodyParser.json());
+
+                    app.set('trust proxy', 1) // trust first proxy
+                    app.use(flash());
+
+                    app.set("view engine", "ejs");
 
                    
 
                     mongoose.connect("mongodb://localhost:27017/clientDB", { useNewUrlParser: true });
 
                     const clientSchema = new mongoose.Schema({ 
-                        fName : String,
-                        lName : String,
-                        userName: String,
+                        firstname : String,
+                        lastname : String,
+                        username: String,
                         email : String,
                         password : String
 
@@ -79,9 +98,9 @@
 
                     app.post("/sign_up", function (req, res) {
                         const newClient = new Client({
-                        fName : req.body.fName,
-                        lName : req.body.lName,
-                        userName : req.body.userName,
+                        firstname : req.body.firstname,
+                        lastname : req.body.lastname,
+                        username : req.body.username,
                         email : req.body.email,
                         password : req.body.password,
                     });
@@ -99,16 +118,16 @@
                     
 
               app.post ("/login", function(req, res){
-                const userName = req.body.userName;
+                const username = req.body.username;
                 const password = req.body.password;
 
-                Client.findOne({userName: userName}, function(err, foundClient) {
+                Client.findOne({username: username}, function(err, foundClient) {
                   if(err) {
                     console.log(err);
                   } else {
                         if(foundClient){
                           if(foundClient.password === password) {
-                            res.render("dashboard")
+                            res.render("dashboard");
                           }
                       }
                     }

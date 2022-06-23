@@ -10,25 +10,37 @@
 
           <!-- navbar -->
 
-     <nav class="navbar  justify-between font-md">
-    <div class="container display-f">
-      <img  class="ml-2 mr-0" src="images/favicon.jpg" width="5%" alt="">
-      <h1 style="margin-right: 18.5rem;" class="site-title text-hover-orange">Cyclepay</h1>
-      <ul class="display-f">
-        <li class="ml-1  text-hover-blue"><a href="/">HOME</a></li>
-        <li class="ml-1 text-hover-blue"><a href="/about_us">ABOUT US</a></li>
-        <li class="ml-1 text-hover-blue"><a href="/our_services">OUR SERVICES</a></li>
-        <li class="ml-1 text-hover-blue"><a href="investment_plans">INVESTMENT PLANS</a></li>
-        <li class="ml-1 text-hover-blue"><a href="/policy">POLICY</a></li>
-        <li class="ml-1 text-hover-secondary"><a class="text-dark text-hover-orange"  href="/login">LOGIN</a></li>
-        <li class="ml-1 text-hover-secondary"><a class="text-dark text-hover-orange" href="/sign_up">REGISTER</a></li>
-      </ul>
-    </div>
+                 <header>
+<div class="container">
+
+  <h1 class="logo">CyclePay</h1>
+  
+  <nav class="site-nav">
+      <ul>
+        <li><a class="text-dark" href="/"><i class="site-nav--icon"></i>Home</a></li> 
+        <li><a href="/about_us"><i class=" site-nav--icon"></i>About</a></li>
+        <li><a href="/investment_plans"><i class=" site-nav--icon"></i>Plans</a></li>
+        <li><a href="/our_services"><i class=" site-nav--icon"></i> Services</a></li>
+        <li><a href="/policy"><i class=" site-nav--icon"></i>Policy</a></li>
+        <li><a href="/login"><i class=" site-nav--icon"></i>Login</a></li>
+        <li><a href="/sign_up"><i class=" site-nav--icon"></i>Register</a></li>
+      </ul> 
   </nav>
+  
+  <div class="menu-toggle">
+    <div class="hamburger"></div>
+  </div>
+  
+</div>
+
+</header>
+
+
+
 
   
                           <div class=" text-hover-blue p-2 fixed">
-                        <a href="#"><img  src="images/comments.png" width="5%" alt="">Chat with Us...</a>
+                        <a class="chat-us" href="#"><img  src="images/comments.png" width="5%" alt="">Chat with Us...</a>
                       </div>
                 
      
@@ -84,8 +96,8 @@
             </div>
             </div>
 
-            <div id="home" class="hero-slider owl-carousel owl-theme">
-                      <div class="single-hs-item item-bg1">
+            <div id="home" class="hero-slider owl-carousel sponsor owl-theme">
+                      <div class="single-hs-item">
                           <div class="d-table">
                               <div class="d-tablecell">
                                   <div class="hero-text">
@@ -97,7 +109,7 @@
                               </div>
                           </div>
                       </div>
-                      <div class="single-hs-item item-bg2">
+                      <div class="single-hs-item">
                           <div class="d-table">
                               <div class="d-tablecell">
                                   <div class="hero-text">
@@ -109,7 +121,7 @@
                               </div>
                           </div>
                       </div>
-                      <div class="single-hs-item item-bg3">
+                      <div class="single-hs-item">
                           <div class="d-table">
                               <div class="d-tablecell">
                                   <div class="hero-text">
@@ -121,7 +133,7 @@
                               </div>
                           </div>
                           </div>
-                          <div class="single-hs-item item-bg4">
+                          <div class="single-hs-item">
                           <div class="d-table">
                               <div class="d-tablecell">
                                   <div class="hero-text">
@@ -214,13 +226,13 @@
                       // animateOut: "fadeOut",
                       responsive:{
                           0:{
-                              sponsor_item:3
+                              sponsor_item:1
                           },
                           600:{
-                              sponsor_items:3
+                              sponsor_items:1
                           },
                           1000:{
-                              sponsor_items:5
+                              sponsor_items:1
                           },
                           1400:{
                               sponsor_items: 5
@@ -229,3 +241,13 @@
                   })
 
                   </script>
+
+                   <script>
+    $('.menu-toggle').click(function() {
+  
+  $('.site-nav').toggleClass('site-nav--open', 500);
+  $(this).toggleClass('open');
+  
+   })
+   </script>
+    
