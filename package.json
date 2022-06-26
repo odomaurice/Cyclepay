@@ -30,7 +30,8 @@
     "mongoose": "^6.4.0",
     "mongoose-encryption": "^2.1.2",
     "path": "^0.12.7",
-    "sass": "^1.52.3"
+    "sass": "^1.52.3",
+    "sweetalert": "^2.1.2"
   },
   "description": ""
 }
