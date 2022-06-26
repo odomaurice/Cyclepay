@@ -1,18 +1,75 @@
  <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
+
 <head>
+
+    <style>
+
+        .end-footer{
+            background-color: orange;
+        }
+        @media (max-width:996px) {
+            form{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                max-width: 100%;
+                max-height: auto;
+                margin: 0.5rem;
+            }
+            body{
+                max-height: 500px;
+            }
+            .container{
+                margin: 1rem;
+            }
+            .end-footer{
+                height: 200px;
+                padding: 2rem;
+                text-align: center;
+            }
+        }
+        @media (min-width: 996px) {
+            .container{
+                margin: 1rem;
+            }
+            body{
+                height: 500px;
+                margin: 2rem;
+            }
+             form{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                max-width: 100%;
+                max-height: auto;
+                margin: 1rem;
+            }
+            .end-footer{
+                height: 200px;
+                padding: 2rem;
+                text-align: center;
+                background-color: #000080;
+
+            }
+        }
+        
+        
+    </style>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
   
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+ 
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="bootstrap-social.css">
   <link rel="stylesheet" href="css/index.css">
 </head>
 
-    <body>
+    
 
     <!-- navbar -->
 
