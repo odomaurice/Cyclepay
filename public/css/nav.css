@@ -58,8 +58,9 @@ header::after {
 }
 
 .site-nav li {
-    color: #0000f5;
-  border-bottom: 1px solid #575766;
+    color: whitesmoke;
+    background-color: #000080;
+  border-bottom: 1px solid #fff;
 }
 
 .site-nav li:last-child {
