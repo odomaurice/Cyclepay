@@ -10,6 +10,9 @@
                     var fs = require("fs");
                     var flash = require("connect-flash");
                     
+                  
+
+                    
                     const {
                       body,
                       validationResult,
@@ -40,7 +43,10 @@
 
                    
 
-                    mongoose.connect("mongodb://localhost:27017/clientDB", { useNewUrlParser: true });
+                    mongoose.connect(
+                      "mongodb+srv://alpha-admin:test1234@cluster1995.hcn4h.mongodb.net/clientDB",
+                      { useNewUrlParser: true }
+                    );
 
                     const clientSchema = new mongoose.Schema({ 
                         firstname : String,
@@ -133,11 +139,16 @@
                     }
               });
           });
+             
+
+          let port = process.env.PORT;
+          if (port == null || port == "") {
+            port = 3000;
+          }
+    
 
 
 
-
-
-                    app.listen(3000, () => 
-                        console.log("Server listening on port 3000"));
+           app.listen(port, () => 
+          console.log("Server is successfully listening"));
                     
