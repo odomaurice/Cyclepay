@@ -21,9 +21,10 @@
           const bodyParser = require("body-parser");
 
           const mongoose = require("mongoose");
-          const bcrypt = require("bcrypt");
-          const saltRounds = 10;
-
+          const session = require("express-session")
+          const passport = require("passport");
+          const passportLocalMongoose = require("passport-local-mongoose");
+          
 
 
 
@@ -43,12 +44,23 @@
 
           app.set("view engine", "ejs");
 
+          app.use(session({
+            secret: "our little secret.",
+            resave: false,
+            saveUninitialized: false,
+          }));
+
+          app.use(passport.initialize());
+          app.use(passport.session());
+
 
 
           mongoose.connect(
           "mongodb+srv://alpha-admin:test1234@cluster1995.hcn4h.mongodb.net/clientDB",
           { useNewUrlParser: true }
           );
+
+          
 
           const clientSchema = new mongoose.Schema({ 
           firstname : String,
@@ -59,13 +71,20 @@
 
           });
 
-          // mongoose-encryption
+          clientSchema.plugin(passportLocalMongoose);
+
+          // MONGOOSE-ENCRYPTION
           // clientSchema.plugin(encrypt, {
           //   secret: process.env.SECRET,
           //   encryptedFields: ["password"],
           // });
 
           const Client = mongoose.model("Client", clientSchema);
+
+          passport.use(Client.createStrategy());
+
+          passport.serializeUser(Client.serializeUser());
+          passport.deserializeUser(Client.deserializeUser());
 
 
 
@@ -96,68 +115,102 @@
           res.render("policy");
           });
 
+          
+
+          app.get("/register", function (req, res) {
+          res.render("register");
+          });
+
           app.get("/dashboard", function (req, res) {
-          res.render("dashboard");
+              if(req.isAuthenticated()) {
+                res.render("dashboard");
+              } else {
+                res.redirect("/login");
+              }
           });
 
-          app.get("/sign_up", function (req, res) {
-          res.render("sign_up");
+          app.post("/register", function (req, res) {
+
+            Client.register({username: req.body.username}, req.body.password, function(err, client){
+                 if(err){
+                  console.log(err);
+                  res.redirect("/register");
+                 } else {
+                  passport.authenticate("local")(req, res, function(){
+                    res.redirect("/dashboard");
+                  })
+                 }
+            });
+
+
+
+
+
+
           });
 
-          app.post("/sign_up", function (req, res) {
-          bcrypt.hash(
-          req.body.password,
-          saltRounds,
-          function (err, hash) {
-          const newClient = new Client({
-          firstname: req.body.firstname,
-          lastname: req.body.lastname,
-          username: req.body.username,
-          email: req.body.email,
-          password: hash,
-          });
+          // SIGN-UP WITH BCRYPT
+          // bcrypt.hash(
+          // req.body.password,
+          // saltRounds,
+          // function (err, hash) {
+          // const newClient = new Client({
+          // firstname: req.body.firstname,
+          // lastname: req.body.lastname,
+          // username: req.body.username,
+          // email: req.body.email,
+          // password: hash,
+          // });
 
-          newClient.save(function (err) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.render("dashboard");
-            }
-          });
+          // newClient.save(function (err) {
+          //   if (err) {
+          //     console.log(err);
+          //   } else {
+          //     res.render("dashboard");
+          //   }
+          // });
 
-          }
-          );
+          // }
+          // );
 
 
           
 
+          
+
+
+
+          app.post("/login", function (req, res) {
+
+
+
+
+
           });
 
+          // LOGIN WITH SALTING & HASHING(B-CRYPT)
+      //     const username = req.body.username;
+      //     const password = (req.body.password);
 
+      //     Client.findOne({username: username}, function(err, foundClient) {
+      //     if(err) {
+      //     console.log(err);
+      //     } else {
+      //     if(foundClient){
+      //       bcrypt.compare(password, foundClient.password, function (err, result) {
+      //         if(result === true) {
+      //            res.render("dashboard");
 
-          app.post ("/login", function(req, res){
-          const username = req.body.username;
-          const password = (req.body.password);
-
-          Client.findOne({username: username}, function(err, foundClient) {
-          if(err) {
-          console.log(err);
-          } else {
-          if(foundClient){
-            bcrypt.compare(password, foundClient.password, function (err, result) {
-              if(result === true) {
-                 res.render("dashboard");
-
-              }
+      //         }
               
-            });
+      //       });
            
          
           
-           }
-        }
-      });
-  });
+      //      }
+      //   }
+      // });
+ 
 
 
           let port = process.env.PORT;
