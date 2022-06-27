@@ -1,4 +1,4 @@
-
+                    require("dotenv").config();
                     const express = require("express");
                     
                     const  ejs = require("ejs");
@@ -57,9 +57,9 @@
 
                     });
 
-                    const secret = "thisisoursecret";
+                    
                     clientSchema.plugin(encrypt, {
-                      secret: secret,
+                      secret: process.env.SECRET,
                       encryptedFields: ["password"],
                     });
 
