@@ -1,154 +1,172 @@
-                    require("dotenv").config();
-                    const express = require("express");
-                    
-                    const  ejs = require("ejs");
-                    const _ = require("lodash");
+          require("dotenv").config();
+          const express = require("express");
 
-                    const cors = require("cors");
-                    const path = require("path");
-                    var http = require("http");
-                    var fs = require("fs");
-                    var flash = require("connect-flash");
-                    
-                  
+          const  ejs = require("ejs");
+          const _ = require("lodash");
 
-                    
-                    const {
-                      body,
-                      validationResult,
-                    } = require("express-validator");
-                    const { Console } = require("console");
-                    
-                    const mongoose = require("mongoose");
-                    const encrypt = require("mongoose-encryption");
-                    const bodyParser = require("body-parser");
+          const cors = require("cors");
+          const path = require("path");
+          var http = require("http");
+          var fs = require("fs");
+          var flash = require("connect-flash");
 
 
 
-                    const app = express();
-                  
 
-                    
+          const {
+          body,
+          validationResult,
+          } = require("express-validator");
+          const { Console } = require("console");
+          const bodyParser = require("body-parser");
 
-                    
-                    app.use(bodyParser.urlencoded({ extended: true }));
-                    app.use(express.static("public"));
-                    app.use(cors());
-                    app.use(bodyParser.json());
-
-                    app.set('trust proxy', 1) // trust first proxy
-                    app.use(flash());
-
-                    app.set("view engine", "ejs");
-
-                   
-
-                    mongoose.connect(
-                      "mongodb+srv://alpha-admin:test1234@cluster1995.hcn4h.mongodb.net/clientDB",
-                      { useNewUrlParser: true }
-                    );
-
-                    const clientSchema = new mongoose.Schema({ 
-                        firstname : String,
-                        lastname : String,
-                        username: String,
-                        email : String,
-                        password : String
-
-                    });
-
-                    
-                    clientSchema.plugin(encrypt, {
-                      secret: process.env.SECRET,
-                      encryptedFields: ["password"],
-                    });
-
-                    const Client = mongoose.model("Client", clientSchema);
-
-                    
-
-                  
+          const mongoose = require("mongoose");
+          const bcrypt = require("bcrypt");
+          const saltRounds = 10;
 
 
-                    app.get("/", function (req, res) {
-                    
-                        res.render("home");
-                    });
 
-                    app.get("/about_us", function (req, res) {
-                      res.render("about_us");
-                    });
 
-                    app.get("/investment_plans", function (req, res) {
-                      res.render("investment_plans");
-                    });
+          const app = express();
 
-                    app.get("/our_services", function (req, res) {
-                      res.render("our_services");
-                    });
 
-                    app.get("/login", function (req, res) {
-                      res.render("login");
-                    });
-                    app.get("/policy", function (req, res) {
-                      res.render("policy");
-                    });
 
-                     app.get("/dashboard", function (req, res) {
-                       res.render("dashboard");
-                     });
-                   
-                    app.get("/sign_up", function (req, res) {
-                      res.render("sign_up");
-                    });
 
-                    app.post("/sign_up", function (req, res) {
-                        const newClient = new Client({
-                        firstname : req.body.firstname,
-                        lastname : req.body.lastname,
-                        username : req.body.username,
-                        email : req.body.email,
-                        password : req.body.password,
-                    });
 
-                    newClient.save(function(err){
-                        if(err){
-                            console.log(err);
-                        } else {
-                            res.render("dashboard")
-                        }
-                    })
-                        
-                    });
+          app.use(bodyParser.urlencoded({ extended: true }));
+          app.use(express.static("public"));
+          app.use(cors());
+          app.use(bodyParser.json());
 
-                    
+          app.set('trust proxy', 1) // trust first proxy
+          app.use(flash());
 
-              app.post ("/login", function(req, res){
-                const username = req.body.username;
-                const password = req.body.password;
+          app.set("view engine", "ejs");
 
-                Client.findOne({username: username}, function(err, foundClient) {
-                  if(err) {
-                    console.log(err);
-                  } else {
-                        if(foundClient){
-                          if(foundClient.password === password) {
-                            res.render("dashboard");
-                          }
-                      }
-                    }
-              });
+
+
+          mongoose.connect(
+          "mongodb+srv://alpha-admin:test1234@cluster1995.hcn4h.mongodb.net/clientDB",
+          { useNewUrlParser: true }
+          );
+
+          const clientSchema = new mongoose.Schema({ 
+          firstname : String,
+          lastname : String,
+          username: String,
+          email : String,
+          password : String
+
           });
-             
+
+          // mongoose-encryption
+          // clientSchema.plugin(encrypt, {
+          //   secret: process.env.SECRET,
+          //   encryptedFields: ["password"],
+          // });
+
+          const Client = mongoose.model("Client", clientSchema);
+
+
+
+
+
+
+          app.get("/", function (req, res) {
+
+          res.render("index");
+          });
+
+          app.get("/about_us", function (req, res) {
+          res.render("about_us");
+          });
+
+          app.get("/investment_plans", function (req, res) {
+          res.render("investment_plans");
+          });
+
+          app.get("/our_services", function (req, res) {
+          res.render("our_services");
+          });
+
+          app.get("/login", function (req, res) {
+          res.render("login");
+          });
+          app.get("/policy", function (req, res) {
+          res.render("policy");
+          });
+
+          app.get("/dashboard", function (req, res) {
+          res.render("dashboard");
+          });
+
+          app.get("/sign_up", function (req, res) {
+          res.render("sign_up");
+          });
+
+          app.post("/sign_up", function (req, res) {
+          bcrypt.hash(
+          req.body.password,
+          saltRounds,
+          function (err, hash) {
+          const newClient = new Client({
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          username: req.body.username,
+          email: req.body.email,
+          password: hash,
+          });
+
+          newClient.save(function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("dashboard");
+            }
+          });
+
+          }
+          );
+
+
+          
+
+          });
+
+
+
+          app.post ("/login", function(req, res){
+          const username = req.body.username;
+          const password = (req.body.password);
+
+          Client.findOne({username: username}, function(err, foundClient) {
+          if(err) {
+          console.log(err);
+          } else {
+          if(foundClient){
+            bcrypt.compare(password, foundClient.password, function (err, result) {
+              if(result === true) {
+                 res.render("dashboard");
+
+              }
+              
+            });
+           
+         
+          
+           }
+        }
+      });
+  });
+
 
           let port = process.env.PORT;
           if (port == null || port == "") {
-            port = 3000;
+          port = 3000;
           }
-    
 
 
 
-           app.listen(port, () => 
+
+          app.listen(port, () => 
           console.log("Server is successfully listening"));
-                    
