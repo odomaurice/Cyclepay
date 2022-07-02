@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+/* @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
 
-@media (max-width: 1000px) {
+/* @media (max-width: 999px) {
 
 body {
 
@@ -29,8 +29,8 @@ header::after {
 
 .logo {
   float: left;
-  font-size: 1rem;
-  margin: 0;
+  /* font-size: 1rem; */
+  /* margin: 0;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -43,12 +43,12 @@ header::after {
   right: 0%;
   clip-path: circle(0px at top right);
   transition: clip-path ease-in-out 700ms;
-/*   display: none; */
+  display: none;
 }
 
 .site-nav--open {
   clip-path: circle(250% at top right);
-/*   display: block; */
+  display: block; 
 }
 
 .site-nav ul {
@@ -162,48 +162,6 @@ header::after {
   
 }
 }
-
-@media (min-width: 1000px) {
- .container {
-  display: flex;
-  /* background: #fff; */
-  margin: 1rem ;
-  padding: 0;
-  
-   justify-content: space-between;
-
-}
-.logo{
-    margin: 0;
-    padding-bottom: 1rem;
-    
-}
-
-header{
-    position: relative;
-    padding: 0;
-    left: 0;
-    width: 100%;
-}
-
-
-.site-nav ul {
-    display: flex;
-    margin-top: 1rem;
-    justify-content: space-between;
-    margin-left: 22rem;
-    margin-right: 10rem;
-    margin-bottom: 3rem ;
-    position: relative;
-}
-
-.site-nav li{
-    margin-left: 1rem;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-}
-
-}
+ */
 
 
