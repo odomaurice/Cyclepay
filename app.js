@@ -141,7 +141,7 @@
 
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
                 callbackURL:
-                  "https://glacial-dawn-07822.herokuapp.com/auth/google/cyclepay",
+                  "https://cyclepay.onrender.com/auth/google/cyclepay",
                 userProfileURL:
                 "https://www.googleapis.com/oauth2/v3/clientinfo",
                 
